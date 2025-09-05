@@ -4,10 +4,10 @@ const nodemailer = require("nodemailer");
 };*/
 // Create a test account or replace with real credentials.
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  service: "gmail", //We can use different email services
   auth: {
-    user: process.env.BUSINESSEMAILID,
-    pass: process.env.APPPASSWORD,
+    user: process.env.BUSINESSEMAILID, //Add your business or Normal email ID here
+    pass: process.env.APPPASSWORD, //Add your email app password here not published
   },
 });
 
