@@ -15,7 +15,7 @@ function VerifyOTP({ phone, setUser }) {
     try {
       const res = await axios.post('/api/auth/verify-otp', { phone, otp });
       localStorage.setItem('token', res.data.token);
-      setUser(res.data.message);
+      setUser(res.data.user);
       alert(res.data.message);
       setTimeout(() => {
         navigate('/home');
