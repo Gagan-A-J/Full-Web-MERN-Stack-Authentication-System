@@ -37,4 +37,4 @@ exports.sendSMS = async (to, message) => {
 };
 
 
-exports.module = sendResetEmail;
+module.exports = sendResetEmail;
