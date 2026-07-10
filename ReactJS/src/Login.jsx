@@ -5,6 +5,7 @@ import VerifyOTP from './Verifyotp';
 
 export default function Login({ setUser }) {
   const [form, setForm] = useState({ email: '', password: '', phone: '+91 ' });
+  const [showPassword, setShowPassword] = useState(false);
   const [showOTP, setShowOTP] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -31,7 +32,15 @@ export default function Login({ setUser }) {
           <h1>Login</h1>
           <input placeholder="Email" type="email" onChange={e => setForm({ ...form, email: e.target.value })} required />
           <br />
-          <input placeholder="Password" type="password" onChange={e => setForm({ ...form, password: e.target.value })} required />
+          <input placeholder="Password" type={showPassword ? "text" : "password"} onChange={e => setForm({ ...form, password: e.target.value })} required />
+          <button
+            type="button"
+            onClick={() =>
+              setShowPassword(!showPassword)
+            }
+          >
+            {showPassword ? "Hide" : "Show"}
+          </button>
           <br />
           <input placeholder="Phone Number" type="tel" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} required />
           <br />
