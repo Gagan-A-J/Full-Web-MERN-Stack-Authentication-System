@@ -2,6 +2,7 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { sendResetEmail, sendSMS } = require('../Utils/sendemail');
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/;
 
 exports.signup = async (req, res) => {
   const { username, email, password, phone } = req.body;
@@ -13,6 +14,17 @@ exports.signup = async (req, res) => {
       else if (existingUser.phone === phone) conflict = 'Phone';
       else conflict = 'Username';
       return res.status(400).json({ message: `${conflict} already exists` });
+    }
+    if (!passwordRegex.test(password)) {
+      return res.status(400).json({
+        message:
+          "Password must contain:\n" +
+          "• 8-20 characters\n" +
+          "• One uppercase letter\n" +
+          "• One lowercase letter\n" +
+          "• One number\n" +
+          "• One special character",
+      });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -126,6 +138,17 @@ exports.resetpassword = async (req, res) => {
     const token = req.cookies?.resetToken || req.params.resetToken;
     if (!token) return res.status(400).json({ message: 'No token provided' });
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if (!passwordRegex.test(password)) {
+      return res.status(400).json({
+        message:
+          "Password must contain:\n" +
+          "• 8-20 characters\n" +
+          "• One uppercase letter\n" +
+          "• One lowercase letter\n" +
+          "• One number\n" +
+          "• One special character",
+      });
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
     await User.findByIdAndUpdate(decoded._id, { password: hashedPassword });
     res.clearCookie('resetToken', {
