@@ -3,8 +3,12 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import VerifyOTP from './Verifyotp';
 
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 export default function Login({ setUser }) {
   const [form, setForm] = useState({ email: '', password: '', phone: '+91 ' });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showOTP, setShowOTP] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -31,7 +35,14 @@ export default function Login({ setUser }) {
           <h1 className="text-2xl font-bold mb-4">Login</h1>
           <input placeholder="Email" type="email" onChange={e => setForm({ ...form, email: e.target.value })} required />
           <br />
-          <input placeholder="Password" type="password" onChange={e => setForm({ ...form, password: e.target.value })} required />
+          <div className="relative mb-4">
+          <input placeholder="Password" type={showPassword ? "text" : "password"} onChange={e => setForm({ ...form, password: e.target.value })} required />
+          <span
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-gray-500 hover:text-blue-600">
+            {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
+          </span>
+          </div>
           <br />
           <input placeholder="Phone Number" type="tel" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} required />
           <br />
