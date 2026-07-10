@@ -8,6 +8,7 @@ export default function ResetPassword() {
   const [password, setPassword] = useState('');
   const [msg, setMsg] = useState('');
   const navigate = useNavigate();
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/;
 
   const reset = async (e) => {
     e.preventDefault();
@@ -19,6 +20,11 @@ export default function ResetPassword() {
       const res = await axios.post(`/api/auth/reset-password/${token}`, { password }, {
         headers: { Authorization: `Bearer ${resetToken}` }
       });
+
+      if (!passwordRegex.test(password)) {
+        alert(res.data.message)
+        return;
+      }
       localStorage.removeItem('resetToken');
       setMsg(res.data.message);
       setTimeout(() => navigate('/login'), 2000);
