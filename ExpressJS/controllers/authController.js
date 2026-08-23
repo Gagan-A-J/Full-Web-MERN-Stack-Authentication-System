@@ -1,4 +1,4 @@
-const User = require("../models/User");
+const { User } = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { sendResetEmail, sendSMS } = require("../Utils/sendemail");
@@ -72,20 +72,6 @@ exports.login = async (req, res) => {
     console.log(err.message);
   }
 };
-
-/*exports.googleOAuthLogin = async (req, res) => {
-  const { googleId, email, name, avatar } = req.body;
-  try {
-    const user = await GoogleOAuth.findOne({ googleId });
-    if (!user) {
-      user = await GoogleOAuth.create({ googleId, email, name, avatar });
-    }
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
-    res.json({ token, user: { id: user._id, email: user.email, name: user.name, avatar: user.avatar }, message: 'Google OAuth login successfully' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};*/
 
 exports.verify = async (req, res) => {
   const { phone, otp } = req.body;
