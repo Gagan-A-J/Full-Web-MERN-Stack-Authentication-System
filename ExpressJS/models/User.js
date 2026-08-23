@@ -8,13 +8,14 @@ const userSchema = new mongoose.Schema({
   otp: { type: String },
   otpExpires: { type: Date },
 }, { timestamps: true });
-module.exports = mongoose.model('User', userSchema);
-/*
-const googleOAth = new mongoose.Schema({
+const User = mongoose.model('User', userSchema);
+
+const googleOAuth = new mongoose.Schema({
   googleId: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
-  name: { type: String, required: true, unique: true },
+  username: { type: String, required: true, unique: true },
   avatar: { type: String, default: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" },
 }, { timestamps: true });
-module.exports = mongoose.model('GoogleOAuth', googleOAth);
-*/
+const GoogleOAuth = mongoose.model('GoogleOAuth', googleOAuth);
+
+module.exports = {User, GoogleOAuth};
