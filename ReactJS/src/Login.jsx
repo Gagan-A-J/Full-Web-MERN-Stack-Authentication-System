@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import VerifyOTP from './Verifyotp';
+import GoogleLoginButton from "./Components/GoogleLoginButton";
 
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -36,12 +37,12 @@ export default function Login({ setUser }) {
           <input placeholder="Email" type="email" onChange={e => setForm({ ...form, email: e.target.value })} required />
           <br />
           <div className="relative mb-4">
-          <input placeholder="Password" type={showPassword ? "text" : "password"} onChange={e => setForm({ ...form, password: e.target.value })} required />
-          <span
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-gray-500 hover:text-blue-600">
-            {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
-          </span>
+            <input placeholder="Password" type={showPassword ? "text" : "password"} onChange={e => setForm({ ...form, password: e.target.value })} required />
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-gray-500 hover:text-blue-600">
+              {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
+            </span>
           </div>
           <br />
           <input placeholder="Phone Number" type="tel" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} required />
@@ -49,9 +50,18 @@ export default function Login({ setUser }) {
           <button type="submit">Send OTP</button>
           <br />
           {/*showOTP && <VerifyOTP phone={form.phone}/>*/}
-          <Link className="block text-center mt-4 text-blue-500 no-underline hover:underline" to="/forgot-password">Forgot Password</Link>
+          <Link className="block text-center mt-1 text-blue-500 no-underline hover:underline" to="/forgot-password">Forgot Password</Link>
           <br />
-          <Link className="block text-center mt-4 text-blue-500 no-underline hover:underline" to="/signup">Don't have an account? Sign up</Link>
+          <Link className="block text-center mt-1 text-blue-500 no-underline hover:underline" to="/signup">Don't have an account? Sign up</Link>
+          <hr className='mt-2' />
+
+          <p className='text-center mt-2'>
+            OR
+          </p>
+
+          <GoogleLoginButton
+            setUser={setUser}
+          />
         </form>
       )}
       {showOTP && <VerifyOTP phone={form.phone} setUser={setUser} />}
